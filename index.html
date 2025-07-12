@@ -1,0 +1,86 @@
+<html lang="la">
+<head>
+  <meta charset="UTF-8">
+  <title>Sacrum Initium</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: 'EB Garamond', serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 30px;
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
+    .input {
+      background: #000;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 8px;
+      margin-top: 20px;
+      font-size: 1em;
+      font-family: inherit;
+    }
+    .button {
+      margin-top: 10px;
+      background: #fff;
+      color: #000;
+      padding: 5px 10px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    a {
+      color: #fff;
+      margin-top: 20px;
+      display: inline-block;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div id="pre-senha">
+    <p>In principio, crudelitas sacra erat.<br>
+    Non ex peccato, sed ex metu orta est.<br>
+    Fides sine misericordia.<br>
+    Misericordia sine fuga.<br>
+    Et nomen eius?<br>
+    Terra conticescit.</p>
+
+    <a href="BercodaVontade.jpg" download>Download: BercodaVontade.jpg</a>
+    <input type="text" class="input" id="senha" placeholder="Senha...">
+    <button class="button" onclick="verificarSenha()">Confirmar</button>
+  </div>
+
+  <div id="pos-senha" class="hidden">
+    <p>Selo um Rompido. A Ilha abriu os olhos.<br>
+    A Vontade precisa de mais para continuar.</p>
+  </div>
+
+  <script>
+    function verificarSenha() {
+      const senha = document.getElementById('senha').value;
+      if (senha === 'Gabriel') {
+        localStorage.setItem('selo1_desbloqueado', 'true');
+        document.getElementById('pre-senha').classList.add('hidden');
+        document.getElementById('pos-senha').classList.remove('hidden');
+      } else {
+        alert('Senha incorreta');
+      }
+    }
+
+    window.onload = function () {
+      if (localStorage.getItem('selo1_desbloqueado') === 'true') {
+        document.getElementById('pre-senha').classList.add('hidden');
+        document.getElementById('pos-senha').classList.remove('hidden');
+      }
+    }
+  </script>
+</body>
+</html>
