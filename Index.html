@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="la">
+<head>
+  <meta charset="UTF-8">
+  <title>Fides Combusta — Fase 2</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: 'EB Garamond', serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 30px;
+      text-align: center;
+    }
+    .hidden { display: none; }
+    .input {
+      background: #000;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 8px;
+      margin-top: 20px;
+      font-size: 1em;
+      font-family: inherit;
+    }
+    .button {
+      margin-top: 10px;
+      background: #fff;
+      color: #000;
+      padding: 5px 10px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    a { color: #fff; margin-top: 20px; display: inline-block; text-decoration: underline; }
+    p { max-width: 720px; line-height: 1.6; }
+    .note { margin-top: 10px; font-size: 0.9em; color: rgba(255,255,255,0.7); }
+  </style>
+</head>
+<body>
+  <div id="pre-senha">
+    <p>
+      Ela ascendeu sobre cinzas e preces.<br>
+      Sua voz emanava o Divino, e o Divino ressoava.<br>
+      Por quanto tempo sua alma pode continuar gritando, após a carne ser consumida pelas chamas?.
+    </p>
+
+    
+    <a id="link-manuscrito" href="CartaVillati.png" download>Download: Carta Villati</a>
+
+    <div class="note"></div>
+
+    <input type="text" class="input" id="senha" placeholder="Senha...">
+    <button class="button" id="btn-confirm">Confirmar</button>
+  </div>
+
+  <div id="pos-senha" class="hidden">
+    <p>
+      O segundo selo foi rompido.<br>
+      As chamas falaram. A Ilha ouviu.
+    </p>
+    <p class="note">Aguarde — redirecionando para a próxima fase...</p>
+  </div>
+
+  <script>
+    /**************************************************************************
+     * Senha obfuscada (simples) - para evitar que a string apareça direta no JS
+     * Montagem em ordem embaralhada; resultado esperado: 
+     **************************************************************************/
+    const segredo = ["ar","Mat","nis","Ig","cha"," ","ri"];
+    const senhaCorreta = segredo[3] + segredo[2] + segredo[5] + segredo[1] + segredo[6] + segredo[0] + segredo[4];
+    // senhaCorreta === "Ignis Matriarcha"
+
+    // Botão e checagem
+    document.getElementById('btn-confirm').addEventListener('click', verificarSenha);
+
+    function verificarSenha() {
+      const tentativa = document.getElementById('senha').value.trim();
+      // comparação sensível a maiúsculas/minúsculas por design (entrada deve ser )
+      if (tentativa === senhaCorreta) {
+        localStorage.setItem('selo2_desbloqueado', 'true');
+        document.getElementById('pre-senha').classList.add('hidden');
+        document.getElementById('pos-senha').classList.remove('hidden');
+
+        // -- REDIRECIONAMENTO --
+        // Troque "fase3.html" pelo caminho real da próxima fase quando estiver pronto.
+        setTimeout(() => {
+          window.location.href = "fase3.html";
+        }, 2500);
+      } else {
+        // mensagem discreta para manter o tom do ARG
+        alert('Palavra incorreta. O fogo não se abre para olhos impuros.');
+      }
+    }
+
+    // Se o selo já foi desbloqueado em uma visita anterior
+    window.addEventListener('load', () => {
+      if (localStorage.getItem('selo2_desbloqueado') === 'true') {
+        document.getElementById('pre-senha').classList.add('hidden');
+        document.getElementById('pos-senha').classList.remove('hidden');
+      }
+    });
+
+    
+  </script>
+</body>
+</html>
